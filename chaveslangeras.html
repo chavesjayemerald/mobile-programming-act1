@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="fullName"></div>
+    <script>
+        let App = document.getElementById('fullName')
+        let firstName = document.createElement('span')
+        let middleName = document.createElement('span')
+        let lastName = document.createElement('span')
+        let wala1 = document.createElement('h1')
+        let wala2 = document.createElement('h1')
+        let wala3 = document.createElement('h1')
+
+        let inputFN = document.createElement('input')
+        let inputMN = document.createElement('input')
+        let inputLN = document.createElement('input')
+        inputFN.addEventListener('input', function(event) {
+            firstName.innerText = event.target.value
+        });
+
+        inputMN.addEventListener('input', function(event) {
+            middleName.innerText = event.target.value
+        });
+
+        inputLN.addEventListener('input', function(event) {
+            lastName.innerText = event.target.value
+        });
+
+        wala1.innerText = " "
+        wala2.innerText = " "
+        wala3.innerText = " "
+        firstName.innerText = "FirstName "
+        middleName.innerText = "MiddleName "
+        lastName.innerText = "LastName "
+
+        
+        App.append(firstName, " ", middleName, " ", lastName)
+
+        document.getElementById("fullName").style.textAlign = "center";
+
+        App.append(wala1)
+        App.append(inputFN)
+        App.append(wala2)
+        App.append(inputMN)
+        App.append(wala3)
+        App.append(inputLN)
+
+        
+        
+    </script>
+</body>
+</html>
