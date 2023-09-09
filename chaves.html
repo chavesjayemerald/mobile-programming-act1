@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sample</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script>
+            let akoApp = document.getElementById('app')
+            let etchwan = document.createElement('h1')
+            let span1 = document.createElement('span')
+            let span2 = document.createElement('span')
+            let span3 = document.createElement('span')
+
+            let centerContainer = document.createElement('center')
+
+            let div1 = document.createElement('div')
+            div1.style = 'margin-bottom:10px;'
+            let div2 = document.createElement('div')
+            div2.style = 'margin-bottom:10px;'
+            let div3 = document.createElement('div')
+
+            span1.innerText = 'Firstname '
+            span2.innerText = 'Lastname '
+            span3.innerText = 'Email'
+
+            let inputField1 = document.createElement('input')
+            inputField1.placeholder = 'Firstname '
+            inputField1.style = 'text-align:center'
+
+            let inputField2 = document.createElement('input')
+            inputField2.setAttribute('placeholder', 'Lastname')
+            inputField2.style = 'text-align:center'
+
+            let inputField3 = document.createElement('input')
+            inputField3.placeholder = 'Email'
+            inputField3.style = 'text-align:center'
+
+            inputField1.addEventListener('input', function(event){
+                span1.innerText = event.target.value + ' '
+            })
+
+            inputField2.addEventListener('input', function(event){
+                span2.innerText = event.target.value + ' '
+            })
+
+            inputField3.addEventListener('input', function(event){
+                span3.innerText = event.target.value + ' '
+                if (!event.target.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                console.log("is not a valid email")
+            }   else {
+                console.log('is valid email')
+            }
+        })
+
+        etchwan.append(span1)
+        etchwan.append(span2)
+      
+
+        div1.append(inputField1)
+        div2.append(inputField2)
+        div3.append(inputField3)
+
+        centerContainer.append(etchwan)
+        centerContainer.append(div1)
+        centerContainer.append(div2)
+        centerContainer.append(div3)
+
+        akoApp.append(centerContainer)
+        </script>
+    </body>
+</html>
