@@ -1,74 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sample</title>
-    </head>
-    <body>
-        <div id="app"></div>
-        <script>
-            let akoApp = document.getElementById('app')
-            let etchwan = document.createElement('h1')
-            let span1 = document.createElement('span')
-            let span2 = document.createElement('span')
-            let span3 = document.createElement('span')
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="area">
 
-            let centerContainer = document.createElement('center')
+    </div>
 
-            let div1 = document.createElement('div')
-            div1.style = 'margin-bottom:10px;'
-            let div2 = document.createElement('div')
-            div2.style = 'margin-bottom:10px;'
-            let div3 = document.createElement('div')
+    <script>
+        let textArea = document.getElementById('area')
 
-            span1.innerText = 'Firstname '
-            span2.innerText = 'Lastname '
-            span3.innerText = 'Email'
+        let data = {
+            'firstname' : '',
+            'lastname' : '',
+            'email' : '',
+            'password' : '',
+            'confirm' : ''
+        }
 
-            let inputField1 = document.createElement('input')
-            inputField1.placeholder = 'Firstname '
-            inputField1.style = 'text-align:center'
+        let firstName = document.createElement('p')
+        let lastName = document.createElement('p')
+        let emailError = document.createElement('p')
+        let passError = document.createElement('p')
+        let confirmError = document.createElement('p')
 
-            let inputField2 = document.createElement('input')
-            inputField2.setAttribute('placeholder', 'Lastname')
-            inputField2.style = 'text-align:center'
+        let FNInput = document.createElement('input')
+        let LNInput = document.createElement('input')
+        let EmailInput = document.createElement('input')
+        let PassInput = document.createElement('input')
+        let ConfirmInput = document.createElement('input')
 
-            let inputField3 = document.createElement('input')
-            inputField3.placeholder = 'Email'
-            inputField3.style = 'text-align:center'
+        let submitButton = document.createElement('button')
 
-            inputField1.addEventListener('input', function(event){
-                span1.innerText = event.target.value + ' '
-            })
+        let div1 = document.createElement('div')
+        let div2 = document.createElement('div')
+        let div3 = document.createElement('div')
+        let div4 = document.createElement('div')
+        let div5 = document.createElement('div')
+        let div6 = document.createElement('div')
 
-            inputField2.addEventListener('input', function(event){
-                span2.innerText = event.target.value + ' '
-            })
+        textArea.style = "text-align: center; margin-top: 15rem;"
+        firstName.style = "display: inline; margin-right: 8px;"
+        lastName.style = "display: inline;"
 
-            inputField3.addEventListener('input', function(event){
-                span3.innerText = event.target.value + ' '
-                if (!event.target.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
-                console.log("is not a valid email")
-            }   else {
-                console.log('is valid email')
+        FNInput.style = "margin: 10px 0px 10px;"
+        LNInput.style = "margin: 10px;"
+
+        EmailInput.style = "margin: 4px;"
+        PassInput.style = "margin: 10px;"
+
+
+        FNInput.setAttribute('placeholder', 'firstname')
+        LNInput.setAttribute('placeholder', 'lastname')
+        EmailInput.setAttribute('placeholder', 'email')
+        PassInput.setAttribute('placeholder', 'password')
+        PassInput.setAttribute('type', 'password')
+
+        ConfirmInput.setAttribute('placeholder', 'confirm')
+        ConfirmInput.setAttribute('type', 'password')
+
+
+        FNInput.addEventListener('input', function(event){
+            firstName.innerText = event.target.value
+            data.firstname = event.target.value
+        });
+
+        LNInput.addEventListener('input', function(event){
+            lastName.innerText = event.target.value
+            data.lastname = event.target.value
+        });
+
+        EmailInput.addEventListener('input', function(event){
+            data.email = event.target.value
+            if (!event.target.value.includes('@' && '.')){
+                emailError.innerText = "Input Valid Email!"
+                emailError.style = "color: #FF0000; margin-right: 0.5rem;"
+            } else{
+                emailError.innerText = ''
             }
-        })
+        });
 
-        etchwan.append(span1)
-        etchwan.append(span2)
-      
+        PassInput.addEventListener('input', function(event){
+            data.password = event.target.value
+            if (!event.target.value.match(/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/)){
+                passError.innerText = "Weak Password"
+                passError.style = "color: #FF0000; margin-right: 0.5rem;"
+            }
+            else if (event.target.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)){
+                passError.innerText = "Strong Password"
+                passError.style = "color: #00A318; margin-right: 0.5rem;"
+            }
+        });
 
-        div1.append(inputField1)
-        div2.append(inputField2)
-        div3.append(inputField3)
+        ConfirmInput.addEventListener('input', function(event){
+            data.confirm = event.target.value
+            if(event.target.value === PassInput.value){
+                confirmError.innerText = ""
+                confirmError.style = "margin-right: 2.5rem;"
+            } else {
+                confirmError.innerText = "Password Must Match!"
+                confirmError.style = "color: #FF0000; margin-right: 0.5rem;"
+            }
+        });
 
-        centerContainer.append(etchwan)
-        centerContainer.append(div1)
-        centerContainer.append(div2)
-        centerContainer.append(div3)
+        submitButton.addEventListener('click', function(event){
+            if (!data.email.includes('@' && '.') || data.password.length < 15 ){
+                alert("Please input again!");
+            } else {
+                console.log(data)
+            }
+        });
 
-        akoApp.append(centerContainer)
-        </script>
-    </body>
+        firstName.innerText = "Firstname"
+        lastName.innerText = "Lastname"
+        submitButton.innerText = "Submit"
+
+        textArea.append(firstName)
+        div1.append(FNInput)
+        textArea.append(lastName)
+        div2.append(LNInput)
+
+        div3.append(EmailInput)
+        div3.append(emailError)
+        div4.append(PassInput)
+        div4.append(passError)
+        div5.append(ConfirmInput)
+        div5.append(confirmError)
+
+        div6.append(submitButton)
+
+        textArea.append(div1)
+        textArea.append(div2)
+        textArea.append(div3)
+        textArea.append(div4)
+        textArea.append(div5)
+        textArea.append(div6)
+
+    </script>
+</body>
 </html>
