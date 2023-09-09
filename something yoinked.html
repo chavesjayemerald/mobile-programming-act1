@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        body{
+             background-image: url(leadspace.png);
+             background-repeat: no-repeat;
+             background-size: cover;
+        }
+      .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        height: 100vh; 
+      }
+
+      .form-element {
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .span {
+        font-size: 50px;
+        margin:  10px;
+        text-align: center;
+        margin-top: 20px;
+        margin-right: 50px;
+        margin-left: 1.5px;
+        font-family: 'font-family', 'Prata', serif;
+        color: white;
+
+      }
+
+      .warning {
+        color: red;
+      }
+
+      input {
+        padding: 10px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .strong-password {
+        color: green;
+        text-align: center;
+        margin-left: 450px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .weak-password {
+        color: red;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .submit-button {
+        background-color: #007BFF;
+        color: white;
+        padding: 20px 50px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-top: 50px;
+      }
+
+      .submit-button:hover {
+        background-color: #0056b3;
+      }
+
+    </style>
+    <title>validate</title>
+  </head>
+
+  <body>
+    <div class="form-container">
+      <div id="app"></div>
+      <script>
+        let mainApp = document.getElementById("app");
+        let etchWan = document.createElement("h1");
+
+        let nameContainer = document.createElement("div");
+        nameContainer.classList.add("name-container");
+
+        let passwordContainer = document.createElement("div");
+        passwordContainer.classList.add("form-element");
+
+        let spanfirstName = document.createElement("span");
+        spanfirstName.innerText = "First Name";
+        spanfirstName.classList.add("span");
+        let spanlastName = document.createElement("span");
+        spanlastName.innerText = "Last Name";
+        spanlastName.classList.add("span");
+
+        let spanEmail = document.createElement("span");
+        let spanPass = document.createElement("span");
+        let spanConf = document.createElement("span");
+
+        let divOne = document.createElement("div");
+        let divTwo = document.createElement("div");
+        let divThree = document.createElement("div");
+        let divFour = document.createElement("div");
+        let divFive = document.createElement("div");
+
+        let passwordStrength = document.createElement("div");
+        passwordStrength.classList.add("strong-password");
+        passwordStrength.innerText = "";
+
+        passwordContainer.appendChild(passwordStrength);
+
+        let inputNgaElement = document.createElement("input");
+        let inputNgaElementTwo = document.createElement("input");
+        let inputNgaElementThree = document.createElement("input");
+        let inputNgaElementFour = document.createElement("input");
+        let inputNgaElementFive = document.createElement("input");
+
+        inputNgaElement.setAttribute("placeholder", "First Name");
+        inputNgaElementTwo.setAttribute("placeholder", "Last Name");
+        inputNgaElementThree.setAttribute("placeholder", "Email");
+        inputNgaElementFour.setAttribute("placeholder", "Password");
+        inputNgaElementFive.setAttribute("placeholder", "Confirm Password");
+
+        inputNgaElement.addEventListener("input", function (event) {
+          spanfirstName.innerText = event.target.value + " ";
+        });
+
+        inputNgaElementTwo.addEventListener("input", (event) => {
+          spanlastName.innerText = event.target.value;
+        });
+
+        function validateEmail() {
+          const email = inputNgaElementThree.value;
+          const emailWarning = document.getElementById("email-warning");
+          const hasAtSymbol = email.includes("@");
+          const isGmail = email.includes("gmail");
+
+          if (!hasAtSymbol || !isGmail) {
+            emailWarning.style.display = "block";
+          } else {
+            emailWarning.style.display = "none";
+          }
+        }
+
+        inputNgaElementThree.addEventListener("input", validateEmail);
+
+        function validatePassword() {
+          const password = inputNgaElementFour.value;
+          const passwordWarning = document.getElementById("password-warning");
+
+          const hasLowerCase = /[a-z]/.test(password);
+          const hasUpperCase = /[A-Z]/.test(password);
+          const hasSpecialCharacter = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(
+            password
+          );
+          const hasNumber = /[0-9]/.test(password);
+
+          if (
+            password === "" ||
+            (hasLowerCase &&
+              hasUpperCase &&
+              hasSpecialCharacter &&
+              hasNumber &&
+              password.length >= 8)
+          ) {
+            passwordWarning.style.display = "none";
+            passwordStrength.innerText = "Strong Password";
+            passwordStrength.style.color = "green";
+          } else {
+            passwordWarning.style.display = "block";
+            passwordStrength.innerText = "Weak Password";
+            passwordStrength.style.color = "red";
+          }
+        }
+
+        inputNgaElementFour.addEventListener("input", validatePassword);
+
+        function hidePasswordStrength() {
+          passwordStrength.innerText = "";
+        }
+
+        let inputElements = [
+          inputNgaElement,
+          inputNgaElementTwo,
+          inputNgaElementThree,
+          inputNgaElementFive,
+        ];
+
+        inputElements.forEach((inputElement) => {
+          inputElement.addEventListener("focus", hidePasswordStrength);
+        });
+
+        function validatePasswords() {
+          const password = inputNgaElementFour.value;
+          const confirmPassword = inputNgaElementFive.value;
+          const passwordMatchWarning = document.getElementById(
+            "password-match"
+          );
+
+          if (password !== confirmPassword) {
+            passwordMatchWarning.style.display = "block";
+          } else {
+            passwordMatchWarning.style.display = "none";
+          }
+        }
+
+        inputNgaElementFive.addEventListener("input", validatePasswords);
+
+        etchWan.append(spanEmail);
+        mainApp.append(etchWan);
+        divOne.append(inputNgaElement);
+        divOne.classList.add("form-element");
+        divTwo.append(inputNgaElementTwo);
+        divTwo.classList.add("form-element");
+        divThree.append(inputNgaElementThree);
+        divThree.classList.add("form-element");
+        divFour.append(inputNgaElementFour);
+        divFour.classList.add("form-element");
+        divFive.append(inputNgaElementFive);
+        divFive.classList.add("form-element");
+        divTwo.append(inputNgaElementTwo);
+        divThree.append(inputNgaElementThree);
+        divFive.append(inputNgaElementFive);
+
+        nameContainer.append(spanfirstName);
+        nameContainer.append(spanlastName);
+        etchWan.append(nameContainer);
+        mainApp.append(etchWan);
+        mainApp.append(divOne);
+        mainApp.append(divTwo);
+        mainApp.append(divThree);
+        mainApp.append(divFour);
+        mainApp.append(divFive);
+        mainApp.appendChild(passwordStrength);
+
+        const emailWarning = document.createElement("div");
+        emailWarning.id = "email-warning";
+        emailWarning.classList.add("warning");
+        emailWarning.innerText = "Email must contain '@' and 'gmail'";
+        divThree.appendChild(emailWarning);
+        emailWarning.style.display = "none";
+
+        const passwordWarning = document.createElement("div");
+        passwordWarning.id = "password-warning";
+        passwordWarning.classList.add("warning");
+        passwordWarning.innerText = "Password must be strong";
+        divFour.appendChild(passwordWarning);
+        passwordWarning.style.display = "none";
+
+        const passwordMatchWarning = document.createElement("div");
+        passwordMatchWarning.id = "password-match";
+        passwordMatchWarning.classList.add("warning");
+        passwordMatchWarning.innerText = "Password did not match.";
+        divFive.appendChild(passwordMatchWarning);
+        passwordMatchWarning.style.display = "none";
+
+        let submitButton = document.createElement("button");
+        submitButton.textContent = "Submit";
+        submitButton.type = "button";
+        submitButton.classList.add("submit-button");
+
+        submitButton.addEventListener("click", function () {
+          alert("Submit button clicked!");
+        });
+
+        mainApp.appendChild(submitButton);
+      </script>
+    </div>
+  </body>
+</html>
